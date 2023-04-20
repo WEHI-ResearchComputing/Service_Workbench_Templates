@@ -4,25 +4,35 @@
 sudo yum install -y gcc-7.3.* gcc-gfortran-7.3.* gcc-c++-7.3.*
 sudo yum install -y java-1.8.0-openjdk-devel-1.8.0.*
 sudo yum install -y readline-devel-6.2 zlib-devel-1.2.* bzip2-devel-1.0.* xz-devel-5.2.* pcre-devel-8.32
-sudo yum install -y libcurl-devel-7.79.1 libpng-devel-1.5.* cairo-devel-1.15.* pango-devel-1.42.*
+sudo yum install -y libcurl-devel-* libpng-devel-1.5.* cairo-devel-1.15.* pango-devel-1.42.*
 sudo yum install -y xorg-x11-server-devel-1.20.* libX11-devel-1.6.* libXt-devel-1.1.*
 
-# Install R from source (https://docs.rstudio.com/resources/install-r-source/)
-R_VERSION="4.1.3"
+R_VERSION="4.2.3"
 mkdir -p "/tmp/R/"
-curl -s "https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz" > "/tmp/R/R-${R_VERSION}.tar.gz"
+curl -s "https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz" > "/tmp/R/R-${R_VERSION}.tar.gz"
 cd "/tmp/R/"
-tar xvf "R-${R_VERSION}.tar.gz"
-cd "R-${R_VERSION}/"
-./configure --enable-memory-profiling --enable-R-shlib --with-blas --with-lapack --with-pcre1
+tar -xzvf "R-${R_VERSION}.tar.gz"
+cd "R-${R_VERSION}"
+./configure \
+    --prefix=/opt/R/${R_VERSION} \
+    --enable-memory-profiling \
+    --enable-R-shlib \
+    --with-blas \
+    --with-lapack \
+    --with-pcre1
 sudo make
 sudo make install
 cd "../../.."
 
+/opt/R/${R_VERSION}/bin/R --version
+sudo ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
+sudo ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
+
 # Install RStudio
-rstudio_rpm="rstudio-server-rhel-1.4.1717-x86_64.rpm"
-curl -s "https://download2.rstudio.org/server/centos7/x86_64/${rstudio_rpm}" > "/tmp/rstudio/${rstudio_rpm}"
-sudo yum install -y "/tmp/rstudio/${rstudio_rpm}"
+rstudio_rpm="rstudio-server-rhel-2023.03.0-386-x86_64.rpm"
+curl -s "https://download2.rstudio.org/server/centos7/x86_64/${rstudio_rpm}"  > "/tmp/R/${rstudio_rpm}"
+sudo yum install -y "/tmp/R/${rstudio_rpm}"
+rm "/tmp/R/${rstudio_rpm}"
 sudo systemctl enable rstudio-server
 sudo systemctl restart rstudio-server
 
@@ -90,7 +100,7 @@ sudo yum install -y "/tmp/libgit2/${libgit2_devel_rpm}"
 sudo yum groupinstall -y 'Development Tools'            # Compiling tools 
 sudo yum install -y libssh2-devel-1.4.*                       # Client SSH
 
-sudo yum install -y libjpeg-turbo-devel-1.2.*    # Images
+sudo yum install -y libjpeg-turbo-devel-*    # Images
 sudo yum install -y ImageMagick-6.9.* ImageMagick-c++-devel-6.9.*   # Images
 sudo yum install -y mesa-libGLU-devel-9.0.*            # Graphs
 sudo yum install freetype-devel-2.8 harfbuzz-devel-1.7.*          # Font
