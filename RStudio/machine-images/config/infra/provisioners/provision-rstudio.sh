@@ -7,7 +7,7 @@ sudo yum install -y readline-devel-6.2 zlib-devel-1.2.* bzip2-devel-1.0.* xz-dev
 sudo yum install -y libcurl-devel-* libpng-devel-1.5.* cairo-devel-1.15.* pango-devel-1.42.*
 sudo yum install -y xorg-x11-server-devel-1.20.* libX11-devel-1.6.* libXt-devel-1.1.*
 
-R_VERSION="4.2.3"
+R_VERSION="4.3.0"
 mkdir -p "/tmp/R/"
 curl -s "https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz" > "/tmp/R/R-${R_VERSION}.tar.gz"
 cd "/tmp/R/"
@@ -29,10 +29,9 @@ sudo ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
 sudo ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
 
 # Install RStudio
-rstudio_rpm="rstudio-server-rhel-2023.03.0-386-x86_64.rpm"
-curl -s "https://download2.rstudio.org/server/centos7/x86_64/${rstudio_rpm}"  > "/tmp/R/${rstudio_rpm}"
-sudo yum install -y "/tmp/R/${rstudio_rpm}"
-rm "/tmp/R/${rstudio_rpm}"
+rstudio_rpm="rstudio-server-rhel-1.4.1717-x86_64.rpm"
+curl -s "https://download2.rstudio.org/server/centos7/x86_64/${rstudio_rpm}" > "/tmp/rstudio/${rstudio_rpm}"
+sudo yum install -y "/tmp/rstudio/${rstudio_rpm}"
 sudo systemctl enable rstudio-server
 sudo systemctl restart rstudio-server
 
