@@ -38,14 +38,14 @@ sudo systemctl restart rstudio-server
 # Create a user for RStudio to use; its password is set at boot time
 sudo useradd -m rstudio-user
 
-#Generate self signed certificate
+# Generate self signed certificate
 commonname=$(uname -n)
 password=dummypassword
 mkdir -p "/tmp/rstudiov2/ssl"
 chmod 700 /tmp/rstudiov2/ssl
 cd /tmp/rstudiov2/ssl
 openssl genrsa -des3 -passout pass:$password -out cert.key 2048
-#Remove passphrase from the key. Comment the line out to keep the passphrase
+# Remove passphrase from the key. Comment the line out to keep the passphrase
 openssl rsa -in cert.key -passin pass:$password -out cert.key
 openssl req -new -key cert.key -out cert.csr -passin pass:$password \
     -subj "/C=NA/ST=NA/L=NA/O=NA/OU=SWB/CN=$commonname/emailAddress=example.com"
@@ -108,7 +108,8 @@ sudo yum install -y mariadb-devel-5.5.*                       # MariaDB/MySQL cl
 sudo yum install -y unixODBC-devel-2.3.*                      # ODBC API client
 sudo yum install -y gmp-devel-6.0.*                           # GNU MP arbitrary precision library
 
-#Additional R Packages
+# Additional R Packages
+sudo su - -c "R -e \"install.packages('paws', version='0.2.0', repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"install.packages('tidyverse', version='1.3.1', repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"install.packages('devtools', version='2.4.0', repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"install.packages('kableExtra', version='1.3.4', repos='http://cran.rstudio.com/')\""
