@@ -125,6 +125,10 @@ sudo su - -c "R -e \"install.packages('MASS', version='7.3.53.1', repos='http://
 sudo su - -c "R -e \"install.packages('quantreg', version='5.85', repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"install.packages('DescTools', version='0.99.41', repos='http://cran.rstudio.com/')\""
 
+sudo su - -c "R -e \"install.packages('BiocManager', version='1.30.4)', repos='http://cran.rstudio.com/')\""
+sudo su - -c "R -e \"BiocManager::install(version = '3.17')\""
+sudo su - -c "R -e \"BiocManager::install('limma')\""
+
 # Wipe out all traces of provisioning files
 sudo rm -rf "/tmp/rstudio"
 sudo rm -rf "/tmp/libgit2"
