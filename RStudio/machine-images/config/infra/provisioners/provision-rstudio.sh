@@ -108,6 +108,12 @@ sudo yum install -y mariadb-devel-5.5.*                       # MariaDB/MySQL cl
 sudo yum install -y unixODBC-devel-2.3.*                      # ODBC API client
 sudo yum install -y gmp-devel-6.0.*                           # GNU MP arbitrary precision library
 
+# survminer requires a version of cmake greater then via yum (CMake 3.2 or higher is required.  You are running version 2.8.12.2)
+# https://askubuntu.com/a/652321
+curl -sSL https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz | sudo tar -xzC /opt
+sudo ln -s /opt/cmake-3.5.2-Linux-x86_64/bin/cmake /usr/local/bin/cmake
+
+
 # Additional R Packages
 sudo su - -c "R -e \"install.packages('paws', version='0.2.0', repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"install.packages('tidyverse', version='1.3.1', repos='http://cran.rstudio.com/')\""
