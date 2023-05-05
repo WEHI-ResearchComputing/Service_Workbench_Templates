@@ -84,6 +84,10 @@ Resources:
             Resource: "*"
           - Effect: Allow
             Action:
+              - "batch:*"
+            Resource: "*"
+          - Effect: Allow
+            Action:
               - "sts:AssumeRole"
             Resource: !Sub 'arn:${AWS::Partition}:iam::*:role/swb-*'
   IAMRole:
@@ -153,6 +157,14 @@ Resources:
                   - "ssm:GetParameter"
                   - "ssm:PutParameter"
                 Resource: !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*"
+        - PolicyName: full-batch-access
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "batch:*"
+                Resource: !Sub "arn:${AWS::Partition}:batch:${AWS::Region}:${AWS::AccountId}:*"
       PermissionsBoundary: !Ref InstanceRolePermissionBoundary
 
   InstanceProfile:
