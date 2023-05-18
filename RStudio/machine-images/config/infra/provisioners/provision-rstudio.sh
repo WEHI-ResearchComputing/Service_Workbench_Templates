@@ -29,11 +29,28 @@ sudo ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
 sudo ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
 
 # Install RStudio
-rstudio_rpm="rstudio-server-rhel-1.4.1717-x86_64.rpm"
-curl -s "https://download2.rstudio.org/server/centos7/x86_64/${rstudio_rpm}" > "/tmp/rstudio/${rstudio_rpm}"
+mkdir -p "/tmp/rstudio/"
+# rstudio_rpm="rstudio-server-rhel-2023.03.0-386-x86_64.rpm" XX
+# rstudio_rpm="rstudio-server-rhel-2022.02.3-492-x86_64.rpm" XX
+# rstudio_rpm="rstudio-server-rhel-2021.09.4-403-x86_64.rpm" XX
+# rstudio_rpm="rstudio-server-rhel-2021.09.1-372-x86_64.rpm" XX
+# rstudio_rpm="rstudio-server-rhel-1.4.1743-x86_64.rpm" XX
+rstudio_rpm="rstudio-server-rhel-1.4.1717-x86_64.rpm" # OK
+
+
+# curl -s "https://download2.rstudio.org/server/centos7/x86_64/${rstudio_rpm}" > "/tmp/rstudio/${rstudio_rpm}"
+curl -s "https://s3.amazonaws.com/rstudio-ide-build/server/centos7/x86_64/${rstudio_rpm}" > "/tmp/rstudio/${rstudio_rpm}"
+
 sudo yum install -y "/tmp/rstudio/${rstudio_rpm}"
 sudo systemctl enable rstudio-server
 sudo systemctl restart rstudio-server
+
+# systemctl status -l rstudio-server.service
+
+# sudo systemctl stop rstudio-server
+# sudo systemctl disable rstudio-server
+# sudo yum remove rstudio-server
+
 
 # Create a user for RStudio to use; its password is set at boot time
 sudo useradd -m rstudio-user
@@ -125,7 +142,7 @@ sudo su - -c "R -e \"install.packages('MASS', version='7.3.53.1', repos='http://
 sudo su - -c "R -e \"install.packages('quantreg', version='5.85', repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"install.packages('DescTools', version='0.99.41', repos='http://cran.rstudio.com/')\""
 
-sudo su - -c "R -e \"install.packages('BiocManager', version='1.30.4)', repos='http://cran.rstudio.com/')\""
+sudo su - -c "R -e \"install.packages('BiocManager', version='1.30.4'), repos='http://cran.rstudio.com/')\""
 sudo su - -c "R -e \"BiocManager::install(version = '3.17')\""
 sudo su - -c "R -e \"BiocManager::install('limma')\""
 
