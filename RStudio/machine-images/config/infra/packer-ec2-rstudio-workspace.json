@@ -39,7 +39,7 @@
     },
     {
       "type": "shell",
-      "script": "provisioners/provision-rstudio.sh"
+      "script": "provisioners/provision-rstudio-container-host.sh"
     }
   ]
 }
