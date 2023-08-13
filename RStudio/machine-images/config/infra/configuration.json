@@ -1,10 +1,10 @@
 {
-    "aws_access_key": "",
-    "aws_secret_key": "",
-    "awsRegion": "",
+    "aws_access_key": "AKIA----7LS65",
+    "aws_secret_key": "z1qku5----mdYji3sHsasE",
+    "awsRegion": "ap-southeast-2",
     "vpcId": "",
     "subnetId": "",
-    "amiName": "",
-    "awsProfile": "",
-    "stageName": ""
+    "amiName": "jk-dev-16",
+    "awsProfile": "swb",
+    "stageName": "dev"
 }

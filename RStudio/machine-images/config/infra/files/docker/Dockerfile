@@ -4,17 +4,21 @@ RUN apt update
 RUN apt install -y \
   jq \
   curl \
-  fuse
+  fuse3
 
-ADD https://github.com/kahing/goofys/releases/download/v0.24.0/goofys .
-RUN mv goofys /usr/local/bin/goofys
-RUN chmod +x /usr/local/bin/goofys
+ADD https://downloads.rclone.org/v1.63.1/rclone-v1.63.1-linux-amd64.zip .
+RUN unzip rclone-v1.63.1-linux-amd64.zip
+RUN cp rclone-v1.63.1-linux-amd64/rclone /usr/bin/
+RUN chown root:root /usr/bin/rclone
+RUN chmod 755 /usr/bin/rclone
 
-# S3 mounts rely on the host sharing the following file in the following location:
-# /host/etc/s3-mounts.json
-# Via a means similar to this:
-# /usr/bin/docker run --privileged --rm -e PASSWORD=$(sudo cat /root/secret.txt) -p 8787:8787 --mount type=bind,source=/usr/local/,target=/host rocker_tidyverse_4.3.0_goofys:1 &
-COPY ./mount_s3_wehi.sh /etc/cont-init.d/03_mount_s3
+RUN mkdir -p /home/rstudio/studies
+RUN chown rstudio:rstudio /home/rstudio/studies
+
+RUN mkdir -p /root/rclone/vfs-cache-dir/
+RUN mkdir -p /root/.config/rclone/
+COPY ./rclone.conf /root/.config/rclone/rclone.conf
+COPY ./mount_s3_using_rclone.sh /etc/cont-init.d/03_mount_s3
 RUN chmod +x /etc/cont-init.d/03_mount_s3
 
 COPY scripts /scripts
