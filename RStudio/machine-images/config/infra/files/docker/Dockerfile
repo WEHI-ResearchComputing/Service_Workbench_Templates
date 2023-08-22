@@ -6,7 +6,8 @@ RUN apt install -y \
   curl \
   fuse3
 
-ADD https://downloads.rclone.org/v1.63.1/rclone-v1.63.1-linux-amd64.zip .
+# ADD https://downloads.rclone.org/v1.63.1/rclone-v1.63.1-linux-amd64.zip .
+COPY ./rclone-v1.63.1-linux-amd64.zip .
 RUN unzip rclone-v1.63.1-linux-amd64.zip
 RUN cp rclone-v1.63.1-linux-amd64/rclone /usr/bin/
 RUN chown root:root /usr/bin/rclone
@@ -24,3 +25,6 @@ RUN chmod +x /etc/cont-init.d/03_mount_s3
 COPY scripts /scripts
 RUN /scripts/install_bioconductor.sh
 RUN /scripts/install_paws.sh
+
+ARG SET_PASSWORD_TO
+ENV PASSWORD=$SET_PASSWORD_TO
