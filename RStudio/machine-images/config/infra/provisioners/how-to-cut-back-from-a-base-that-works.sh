@@ -38,8 +38,6 @@ sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
 
-sudo docker pull public.ecr.aws/h3j5s9c2/rocker_tidyverse_4-3-0_goofys_paws_bioconductor:1
-
 sudo cp -v /tmp/rstudio/start_rstudio_in_container.sh /root/
 sudo chmod +x /root/start_rstudio_in_container.sh
 

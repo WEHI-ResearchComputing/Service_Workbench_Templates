@@ -1,12 +1,13 @@
 [Unit]
 Description=docker boot
 After=docker.service
+Requires=docker.service
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
+TimeoutStopSec=60
 WorkingDirectory=/root
 ExecStart=/root/start_rstudio_in_container.sh
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
