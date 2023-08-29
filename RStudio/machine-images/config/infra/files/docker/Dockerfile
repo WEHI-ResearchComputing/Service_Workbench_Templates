@@ -1,4 +1,4 @@
-FROM rocker/tidyverse:4.3.0
+FROM docker.io/ahmohamed/analysisenv:master
 
 RUN apt update
 RUN apt install -y \
@@ -23,7 +23,7 @@ COPY ./mount_s3_using_rclone.sh /etc/cont-init.d/03_mount_s3
 RUN chmod +x /etc/cont-init.d/03_mount_s3
 
 COPY scripts /scripts
-RUN /scripts/install_bioconductor.sh
+# RUN /scripts/install_bioconductor.sh
 RUN /scripts/install_paws.sh
 
 ARG SET_PASSWORD_TO
