@@ -1,13 +1,14 @@
 #!/usr/bin/env make
 # vim: tabstop=8 noexpandtab
 
-image_tag=1
+image_tag=2
 image_name=analysisenv
 name_and_tag=$(image_name):$(image_tag)
 aws_account_location=010045907075.dkr.ecr.ap-southeast-2.amazonaws.com
 
 docker-build:
 	docker build \
+		--no-cache \
 		-t $(name_and_tag) \
 		-f Dockerfile \
 		--build-arg SET_PASSWORD_TO=0oNFvILIG3oiVmTw \
